@@ -1,0 +1,128 @@
+<form
+  name="form"
+  (ngSubmit)="f.form.valid && onSubmit()"
+  #f="ngForm"
+  [mustMatch]="['password', 'confirmPassword']"
+  novalidate
+>
+  <div class="form-group">
+    <label>Nom complet*</label>
+    <input
+      type="text"
+      name="fullName"
+      class="form-control"
+      [(ngModel)]="model.fullName"
+      #fullName="ngModel"
+      [ngClass]="{ 'is-invalid': f.submitted && fullName.invalid }"
+      required
+    />
+    <div *ngIf="f.submitted && fullName.invalid" class="invalid-feedback">
+      <div *ngIf="fullName.errors.required">Ce champ est obligatoire.</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input
+      type="text"
+      name="email"
+      class="form-control"
+      [(ngModel)]="model.email"
+      #email="ngModel"
+      [ngClass]="{ 'is-invalid': f.submitted && email.invalid }"
+      required
+      email
+    />
+    <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+      <div *ngIf="email.errors.required">Ce champ est obligatoire.</div>
+      <div *ngIf="email.errors.email">Adresse e-mail invalide.</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Téléphone</label>
+    <input
+      type="text"
+      name="mobile"
+      class="form-control"
+      [(ngModel)]="model.mobile"
+      #mobile="ngModel"
+      [ngClass]="{ 'is-invalid': f.submitted && mobile.invalid }"
+      required
+      minlength="6"
+    />
+    <div *ngIf="f.submitted && mobile.invalid" class="invalid-feedback">
+      <div *ngIf="mobile.errors.required">Ce champ est obligatoire.</div>
+      <div *ngIf="mobile.errors.minlength">
+        Le numéro de Téléphone doit avoir une longueur minimum de 5 caractères.
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col">
+      <label>Mot de passe</label>
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        [(ngModel)]="model.password"
+        #password="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && password.invalid }"
+        required
+        minlength="6"
+      />
+      <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+        <div *ngIf="password.errors.required">Ce champ est obligatoire.</div>
+        <div *ngIf="password.errors.minlength">
+          Le mot de passe doit avoir une longueur minimum de 6 caractères.
+        </div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label>Confirmation du mot de passe</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        class="form-control"
+        [(ngModel)]="model.confirmPassword"
+        #confirmPassword="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.invalid }"
+        required
+      />
+      <div
+        *ngIf="f.submitted && confirmPassword.invalid"
+        class="invalid-feedback"
+      >
+        <div *ngIf="confirmPassword.errors.required">
+          Ce champ est obligatoire.
+        </div>
+        <div *ngIf="confirmPassword.errors.mustMatch">
+          Ce champs doit correspondre à votre mot de passe
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form-check">
+    <input
+      type="checkbox"
+      name="acceptTerms"
+      id="acceptTerms"
+      class="form-check-input"
+      [(ngModel)]="model.acceptTerms"
+      #acceptTerms="ngModel"
+      [ngClass]="{ 'is-invalid': f.submitted && acceptTerms.invalid }"
+      required
+    />
+    <label for="acceptTerms" class="form-check-label"
+      >Cochez la case ci-dessous pour accepter nos Conditions Générales ainsi
+      que notre Politique de Confidentialité.
+    </label>
+    <div *ngIf="f.submitted && acceptTerms.invalid" class="invalid-feedback">
+      Vous devez être d'accord avec les droits et conditions.
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="submit" class="btn btn-primary" value="Submit" />
+  </div>
+</form>
+<div class="alert alert-info" *ngIf="showSuccessMessage">
+  Soumis avec succès.
+</div>
